@@ -1,0 +1,38 @@
+2026-02-04 16:19:35 | INFO | RUN | - | app.gui | Log file: Y:\Projects\Formula_tool\hfp_formulatool_py\output\run_20260204_161935.log
+2026-02-04 16:19:36 | INFO | RUN | - | core.pipeline | START processing
+2026-02-04 16:19:36 | INFO | RUN | - | core.pipeline | Input=Y:\Projects\truth-table-generator\fixtures\Formel_extrakt_nur3_5.xlsx Output=Y:\Projects\Formula_tool\hfp_formulatool_py\output max_rules=2000
+2026-02-04 16:19:36 | INFO | LOAD_WORKBOOK | - | core.pipeline | START
+2026-02-04 16:19:36 | INFO | LOAD_WORKBOOK | - | core.pipeline | OK
+2026-02-04 16:19:36 | INFO | GROUP_ROWS | - | core.pipeline | START
+2026-02-04 16:19:36 | INFO | GROUP_ROWS | - | core.pipeline | OK
+2026-02-04 16:19:36 | INFO | GROUP_ROWS | - | core.pipeline | Grouped sections=1
+2026-02-04 16:19:36 | INFO | SECTION_VALIDATE | A=Climate Change Mitigation | C=3.5. Manufacture of energy efficiency equipment for buildings | F=Substantial Contribution | H=((ePBN111002_1|ePBN111003_1|ePBN115700_1|ePBN115701_1|ePBN115699_1|ePBN115691... | id=545d28b7 | core.pipeline | START
+2026-02-04 16:19:36 | INFO | SECTION_VALIDATE | A=Climate Change Mitigation | C=3.5. Manufacture of energy efficiency equipment for buildings | F=Substantial Contribution | H=((ePBN111002_1|ePBN111003_1|ePBN115700_1|ePBN115701_1|ePBN115699_1|ePBN115691... | id=545d28b7 | core.pipeline | OK
+2026-02-04 16:19:36 | INFO | SECTION_SHEET_NAME | A=Climate Change Mitigation | C=3.5. Manufacture of energy efficiency equipment for buildings | F=Substantial Contribution | H=((ePBN111002_1|ePBN111003_1|ePBN115700_1|ePBN115701_1|ePBN115699_1|ePBN115691... | id=545d28b7 | core.pipeline | START
+2026-02-04 16:19:36 | INFO | SECTION_SHEET_NAME | A=Climate Change Mitigation | C=3.5. Manufacture of energy efficiency equipment for buildings | F=Substantial Contribution | H=((ePBN111002_1|ePBN111003_1|ePBN115700_1|ePBN115701_1|ePBN115699_1|ePBN115691... | id=545d28b7 | core.pipeline | OK
+2026-02-04 16:19:36 | INFO | SECTION_PARSE | A=Climate Change Mitigation | C=3.5. Manufacture of energy efficiency equipment for buildings | F=Substantial Contribution | H=((ePBN111002_1|ePBN111003_1|ePBN115700_1|ePBN115701_1|ePBN115699_1|ePBN115691... | id=545d28b7 | core.pipeline | START
+2026-02-04 16:19:36 | WARNING | SECTION_PARSE | A=Climate Change Mitigation | C=3.5. Manufacture of energy efficiency equipment for buildings | F=Substantial Contribution | H=((ePBN111002_1|ePBN111003_1|ePBN115700_1|ePBN115701_1|ePBN115699_1|ePBN115691... | id=545d28b7 | core.pipeline | FAILED: Unexpected token &
+Traceback (most recent call last):
+  File "Y:\Projects\Formula_tool\hfp_formulatool_py\core\pipeline.py", line 66, in _run_stage
+    value = func()
+  File "Y:\Projects\Formula_tool\hfp_formulatool_py\core\pipeline.py", line 230, in <lambda>
+    lambda: parse_formula_pair(str(formula_ids), str(formula_display)),
+            ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\Projects\Formula_tool\hfp_formulatool_py\core\pipeline.py", line 102, in parse_formula_pair
+    id_ast = parse_formula_with_literal_parser(formula_ids, id_literal_parser)
+  File "Y:\Projects\Formula_tool\hfp_formulatool_py\core\formula_parser.py", line 180, in parse_formula_with_literal_parser
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "Y:\Projects\Formula_tool\hfp_formulatool_py\core\formula_parser.py", line 98, in parse
+    raise FormulaParseError(f"Unexpected token {self.current().value}")
+core.formula_parser.FormulaParseError: Unexpected token &
+2026-02-04 16:19:36 | INFO | EXPORT_ACTIVITY_INIT | C=3.5. Manufacture of energy efficiency equipment for buildings | core.pipeline | START
+2026-02-04 16:19:36 | INFO | EXPORT_ACTIVITY_INIT | C=3.5. Manufacture of energy efficiency equipment for buildings | core.pipeline | OK
+2026-02-04 16:19:36 | INFO | EXPORT_ACTIVITY_PLACEHOLDER | C=3.5. Manufacture of energy efficiency equipment for buildings | core.pipeline | START
+2026-02-04 16:19:36 | INFO | EXPORT_ACTIVITY_PLACEHOLDER | C=3.5. Manufacture of energy efficiency equipment for buildings | core.pipeline | OK
+2026-02-04 16:19:36 | INFO | EXPORT_ACTIVITY_SAVE_WORKBOOK | C=3.5. Manufacture of energy efficiency equipment for buildings | core.pipeline | START
+2026-02-04 16:19:36 | INFO | EXPORT_ACTIVITY_SAVE_WORKBOOK | C=3.5. Manufacture of energy efficiency equipment for buildings | core.pipeline | OK
+2026-02-04 16:19:36 | INFO | EXPORT_ACTIVITY_DOCS | C=3.5. Manufacture of energy efficiency equipment for buildings | core.pipeline | START
+2026-02-04 16:19:36 | INFO | EXPORT_ACTIVITY_DOCS | C=3.5. Manufacture of energy efficiency equipment for buildings | core.pipeline | OK
+2026-02-04 16:19:36 | INFO | RUN | - | core.pipeline | DONE processing
+2026-02-04 16:19:36 | INFO | RUN | - | app.gui | Processing completed

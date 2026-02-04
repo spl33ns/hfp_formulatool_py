@@ -12,6 +12,8 @@ else:  # pragma: no cover - fallback path
     QtWidgets = None
 
 from core.pipeline import process_excel
+from core.logging_conf import setup_run_logging
+from core.stages import Stage
 
 logger = logging.getLogger(__name__)
 
@@ -28,12 +30,13 @@ class PipelineWorker(QtCore.QThread):
 
     def run(self) -> None:
         try:
-            self.progress.emit("Starting processing...")
+            log_path = setup_run_logging(output_root=self.output_root, level=logging.INFO, gui_emit_line=self.progress.emit)
+            logger.info("Log file: %s", log_path, extra={"stage": Stage.RUN.value, "section": "-"})
             results = process_excel(self.input_path, self.output_root, self.max_rules)
-            self.progress.emit("Processing completed")
+            logger.info("Processing completed", extra={"stage": Stage.RUN.value, "section": "-"})
             self.finished.emit(results)
         except Exception as exc:  # pragma: no cover - UI error feedback
-            self.progress.emit(f"Error: {exc}")
+            logger.exception("Processing failed", extra={"stage": Stage.RUN.value, "section": "-"})
             self.finished.emit({})
 
 

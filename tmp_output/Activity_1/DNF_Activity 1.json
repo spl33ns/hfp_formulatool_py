@@ -1,0 +1,29 @@
+{
+  "activity": "Activity 1",
+  "generatedAt": "2026-02-04T15:10:02.955662+00:00",
+  "sections": [
+    {
+      "key": {
+        "A": "Climate Change Mitigation",
+        "B": "3.5",
+        "C": "Activity 1",
+        "F": "Goal 1",
+        "G": "Type A",
+        "H": "A AND B"
+      },
+      "sheetName": null,
+      "formulaIds": "A AND B",
+      "formulaDisplay": "A OR B",
+      "variables": [],
+      "dnf": [],
+      "rules": [],
+      "status": "FAILED",
+      "error": "Formula structure mismatch between H and I"
+    }
+  ],
+  "summary": {
+    "sectionsTotal": 1,
+    "sectionsSucceeded": 0,
+    "sectionsFailed": 1
+  }
+}

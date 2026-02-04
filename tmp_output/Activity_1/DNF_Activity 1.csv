@@ -1,0 +1,2 @@
+Activity,SheetName,Goal,Type,RuleName,ClauseText,LiteralCount,SectionKeyA,SectionKeyB,SectionKeyC,SectionKeyF,SectionKeyG,SectionKeyH,Status,ErrorMessage
+Activity 1,,Goal 1,Type A,,,0,Climate Change Mitigation,3.5,Activity 1,Goal 1,Type A,A AND B,FAILED,Formula structure mismatch between H and I

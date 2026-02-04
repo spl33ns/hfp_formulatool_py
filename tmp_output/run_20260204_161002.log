@@ -1,0 +1,37 @@
+2026-02-04 16:10:02 | INFO | RUN | - | __main__ | CLI start
+2026-02-04 16:10:02 | INFO | RUN | - | __main__ | Log file: tmp_output\run_20260204_161002.log
+2026-02-04 16:10:02 | INFO | RUN | - | core.pipeline | START processing
+2026-02-04 16:10:02 | INFO | RUN | - | core.pipeline | Input=tmp_input.xlsx Output=tmp_output max_rules=2000
+2026-02-04 16:10:02 | INFO | LOAD_WORKBOOK | - | core.pipeline | START
+2026-02-04 16:10:02 | INFO | LOAD_WORKBOOK | - | core.pipeline | OK
+2026-02-04 16:10:02 | INFO | GROUP_ROWS | - | core.pipeline | START
+2026-02-04 16:10:02 | INFO | GROUP_ROWS | - | core.pipeline | OK
+2026-02-04 16:10:02 | INFO | GROUP_ROWS | - | core.pipeline | Grouped sections=1
+2026-02-04 16:10:02 | INFO | SECTION_VALIDATE | A=Climate Change Mitigation | C=Activity 1 | F=Goal 1 | H=A AND B | id=1bbd8304 | core.pipeline | START
+2026-02-04 16:10:02 | INFO | SECTION_VALIDATE | A=Climate Change Mitigation | C=Activity 1 | F=Goal 1 | H=A AND B | id=1bbd8304 | core.pipeline | OK
+2026-02-04 16:10:02 | INFO | SECTION_SHEET_NAME | A=Climate Change Mitigation | C=Activity 1 | F=Goal 1 | H=A AND B | id=1bbd8304 | core.pipeline | START
+2026-02-04 16:10:02 | INFO | SECTION_SHEET_NAME | A=Climate Change Mitigation | C=Activity 1 | F=Goal 1 | H=A AND B | id=1bbd8304 | core.pipeline | OK
+2026-02-04 16:10:02 | INFO | SECTION_PARSE | A=Climate Change Mitigation | C=Activity 1 | F=Goal 1 | H=A AND B | id=1bbd8304 | core.pipeline | START
+2026-02-04 16:10:02 | WARNING | SECTION_PARSE | A=Climate Change Mitigation | C=Activity 1 | F=Goal 1 | H=A AND B | id=1bbd8304 | core.pipeline | FAILED: Formula structure mismatch between H and I
+Traceback (most recent call last):
+  File "Y:\Projects\Formula_tool\hfp_formulatool_py\core\pipeline.py", line 66, in _run_stage
+    value = func()
+  File "Y:\Projects\Formula_tool\hfp_formulatool_py\core\pipeline.py", line 230, in <lambda>
+    lambda: parse_formula_pair(str(formula_ids), str(formula_display)),
+            ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\Projects\Formula_tool\hfp_formulatool_py\core\pipeline.py", line 118, in parse_formula_pair
+    compare_structure(id_ast, display_ast)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\Projects\Formula_tool\hfp_formulatool_py\core\pipeline.py", line 107, in compare_structure
+    raise SectionFailure("Formula structure mismatch between H and I")
+core.pipeline.SectionFailure: Formula structure mismatch between H and I
+2026-02-04 16:10:02 | INFO | EXPORT_ACTIVITY_INIT | C=Activity 1 | core.pipeline | START
+2026-02-04 16:10:02 | INFO | EXPORT_ACTIVITY_INIT | C=Activity 1 | core.pipeline | OK
+2026-02-04 16:10:02 | INFO | EXPORT_ACTIVITY_PLACEHOLDER | C=Activity 1 | core.pipeline | START
+2026-02-04 16:10:02 | INFO | EXPORT_ACTIVITY_PLACEHOLDER | C=Activity 1 | core.pipeline | OK
+2026-02-04 16:10:02 | INFO | EXPORT_ACTIVITY_SAVE_WORKBOOK | C=Activity 1 | core.pipeline | START
+2026-02-04 16:10:02 | INFO | EXPORT_ACTIVITY_SAVE_WORKBOOK | C=Activity 1 | core.pipeline | OK
+2026-02-04 16:10:02 | INFO | EXPORT_ACTIVITY_DOCS | C=Activity 1 | core.pipeline | START
+2026-02-04 16:10:02 | INFO | EXPORT_ACTIVITY_DOCS | C=Activity 1 | core.pipeline | OK
+2026-02-04 16:10:02 | INFO | RUN | - | core.pipeline | DONE processing
+2026-02-04 16:10:02 | INFO | RUN | - | __main__ | Summary: total=1 succeeded=0 failed=1
