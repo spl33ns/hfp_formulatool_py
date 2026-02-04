@@ -29,7 +29,7 @@ class PipelineWorker(QtCore.QThread):
     def run(self) -> None:
         try:
             self.progress.emit("Starting processing...")
-            results = process_excel(self.input_path, self.output_root, None, self.max_rules)
+            results = process_excel(self.input_path, self.output_root, self.max_rules)
             self.progress.emit("Processing completed")
             self.finished.emit(results)
         except Exception as exc:  # pragma: no cover - UI error feedback
@@ -166,7 +166,6 @@ def run_app() -> None:
                     results = process_excel(
                         Path(input_var.get()),
                         Path(output_var.get()),
-                        None,
                         int(max_rules_var.get()),
                     )
                     total = sum(len(sections) for sections in results.values())
