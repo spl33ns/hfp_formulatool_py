@@ -57,7 +57,7 @@ def test_process_excel_happy_path_creates_outputs(tmp_path):
     )
 
     output_root = tmp_path / "out"
-    results = process_excel(input_path, output_root, None, 2000)
+    results = process_excel(input_path, output_root, 2000)
 
     assert "Activity 1" in results
     section = results["Activity 1"][0]
@@ -90,7 +90,7 @@ def test_process_excel_all_failed_creates_placeholder_sheet(tmp_path):
     )
 
     output_root = tmp_path / "out"
-    results = process_excel(input_path, output_root, None, 2000)
+    results = process_excel(input_path, output_root, 2000)
 
     section = results["Activity 1"][0]
     assert section.status == "FAILED"
@@ -119,7 +119,7 @@ def test_process_excel_enforces_max_rules(tmp_path):
         ],
     )
 
-    results = process_excel(input_path, tmp_path / "out", None, 2)
+    results = process_excel(input_path, tmp_path / "out", 2)
     section = results["Activity 1"][0]
 
     assert section.status == "FAILED"
@@ -143,7 +143,7 @@ def test_process_excel_structure_mismatch_fails(tmp_path):
         ],
     )
 
-    results = process_excel(input_path, tmp_path / "out", None, 2000)
+    results = process_excel(input_path, tmp_path / "out", 2000)
     section = results["Activity 1"][0]
 
     assert section.status == "FAILED"
@@ -167,7 +167,7 @@ def test_process_excel_duplicate_display_names_fails(tmp_path):
         ],
     )
 
-    results = process_excel(input_path, tmp_path / "out", None, 2000)
+    results = process_excel(input_path, tmp_path / "out", 2000)
     section = results["Activity 1"][0]
 
     assert section.status == "FAILED"
