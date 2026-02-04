@@ -177,7 +177,6 @@ def process_excel(
         workbook_out = Workbook()
         workbook_out.remove(workbook_out.active)
         used_sheet_names: set[str] = set()
-        created_sheet = False
         for section in sections:
             if section.status != "OK":
                 continue
@@ -190,11 +189,6 @@ def process_excel(
                 activity,
             )
             write_confluence_markdown(confluence_folder, section, activity)
-            created_sheet = True
-
-        if not created_sheet:
-            placeholder = workbook_out.create_sheet("No_Valid_Sections")
-            placeholder["A1"] = "No valid sections were generated for this activity."
 
         workbook_path = activity_folder / f"{sanitize_filename(activity)}.xlsx"
         workbook_out.save(workbook_path)
