@@ -50,8 +50,10 @@ def test_process_excel_happy_path_creates_outputs(tmp_path):
                 "C": "Activity 1",
                 "F": "Goal 1",
                 "G": "Type A",
-                "H": "A=1 AND B=1",
-                "I": "A=1 AND B=1",
+                # Column H is the source of truth and must be parsable with configured operators.
+                "H": "(A|B)&C",
+                # Column I is display-only (must not be parsed).
+                "I": "This can contain arbitrary text & must NOT break parsing",
             }
         ],
     )
@@ -126,7 +128,7 @@ def test_process_excel_enforces_max_rules(tmp_path):
     assert section.error and "DNF rule limit exceeded" in section.error
 
 
-def test_process_excel_structure_mismatch_fails(tmp_path):
+def test_process_excel_does_not_parse_column_I(tmp_path):
     input_path = tmp_path / "input.xlsx"
     _write_workbook(
         input_path,
@@ -137,38 +139,13 @@ def test_process_excel_structure_mismatch_fails(tmp_path):
                 "C": "Activity 1",
                 "F": "Goal 1",
                 "G": "Type A",
-                "H": "A AND B",
-                "I": "A OR B",
+                "H": "A|B",
+                # If this were parsed, it would cause failures. It must be display-only.
+                "I": "Unexpected token & SHOULD NOT MATTER",
             }
         ],
     )
 
     results = process_excel(input_path, tmp_path / "out", 2000)
     section = results["Activity 1"][0]
-
-    assert section.status == "FAILED"
-    assert section.error and "Formula structure mismatch between H and I" in section.error
-
-
-def test_process_excel_duplicate_display_names_fails(tmp_path):
-    input_path = tmp_path / "input.xlsx"
-    _write_workbook(
-        input_path,
-        [
-            {
-                "A": "Climate Change Mitigation",
-                "B": "3.5",
-                "C": "Activity 1",
-                "F": "Goal 1",
-                "G": "Type A",
-                "H": "A AND B",
-                "I": "X AND X",
-            }
-        ],
-    )
-
-    results = process_excel(input_path, tmp_path / "out", 2000)
-    section = results["Activity 1"][0]
-
-    assert section.status == "FAILED"
-    assert section.error and "Duplicate display name for different IDs" in section.error
+    assert section.status == "OK"

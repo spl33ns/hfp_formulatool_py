@@ -8,6 +8,7 @@ class Stage(str, Enum):
     RUN = "RUN"
 
     # Input
+    LOAD_OPERATOR_CONFIG = "LOAD_OPERATOR_CONFIG"
     LOAD_WORKBOOK = "LOAD_WORKBOOK"
     GROUP_ROWS = "GROUP_ROWS"
 

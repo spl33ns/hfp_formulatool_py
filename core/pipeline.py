@@ -8,6 +8,7 @@ from pathlib import Path
 from core.dnf import normalize_dnf, to_dnf
 from core.formula_parser import FormulaParseError, parse_formula_with_literal_parser, parse_literal
 from core.models import LiteralModel, SectionKey, SectionResult
+from core.operator_config import OperatorConfig, OperatorConfigError, load_operator_config
 from core.stages import Stage
 from core.utils import ABBREVIATIONS, ensure_unique_sheet_name, natural_key, sanitize_filename
 from exporters.confluence import write_confluence_markdown
@@ -41,7 +42,6 @@ def _format_section_ref(
     activity: str | None,
     dnsh_goal: str | None,
     formula_ids: str | None,
-    formula_display: str | None,
 ) -> str:
     def _clean(value: str | None) -> str:
         if value is None:
@@ -54,7 +54,8 @@ def _format_section_ref(
     h = _clean(formula_ids)
     h_short = h if len(h) <= 80 else (h[:77] + "...")
 
-    fingerprint_src = "|".join([a, c, f, h, _clean(formula_display)])
+    # The section key is (A,C,F,H). The fingerprint only depends on these fields.
+    fingerprint_src = "|".join([a, c, f, h])
     fingerprint = hashlib.md5(fingerprint_src.encode("utf-8")).hexdigest()[:8]
 
     return f"A={a} | C={c} | F={f} | H={h_short} | id={fingerprint}"
@@ -65,7 +66,7 @@ def _run_stage(stage: Stage, section: str | None, func, expected_exceptions: tup
     try:
         value = func()
     except expected_exceptions as exc:
-        logger.warning("FAILED: %s", exc, exc_info=True, extra=_extra(stage, section))
+        logger.error("FAILED: %s", exc, exc_info=True, extra=_extra(stage, section))
         _mark_logged(exc)
         raise
     except Exception as exc:
@@ -85,65 +86,30 @@ def build_sheet_name(env_objective: str, section_number: str) -> str:
     return raw_name
 
 
-def parse_formula_pair(formula_ids: str, formula_display: str) -> tuple[list[list[LiteralModel]], list[LiteralModel]]:
+def parse_formula_ids(
+    formula_ids: str,
+    op_config: OperatorConfig,
+    *,
+    log_extra: dict[str, str] | None = None,
+) -> tuple[list[list[LiteralModel]], list[LiteralModel]]:
     id_literals: list[LiteralModel] = []
-    display_literals: list[LiteralModel] = []
 
     def id_literal_parser(raw_literal: str) -> LiteralModel:
-        literal = parse_literal(raw_literal, raw_literal)
+        parsed = parse_literal(raw_literal, raw_literal, op_config=op_config)
+        # Column H is the source of truth (IDs). Use IDs for display_name by default.
+        literal = LiteralModel(id=parsed.id, display_name=parsed.id, op=parsed.op)
         id_literals.append(literal)
         return literal
 
-    def display_literal_parser(raw_literal: str) -> LiteralModel:
-        literal = parse_literal(raw_literal, raw_literal)
-        display_literals.append(literal)
-        return literal
-
-    id_ast = parse_formula_with_literal_parser(formula_ids, id_literal_parser)
-    display_ast = parse_formula_with_literal_parser(formula_display, display_literal_parser)
-
-    def compare_structure(left, right) -> None:
-        if type(left) is not type(right):
-            raise SectionFailure("Formula structure mismatch between H and I")
-        if hasattr(left, "literal"):
-            return
-        if hasattr(left, "child"):
-            compare_structure(left.child, right.child)
-            return
-        if hasattr(left, "left") and hasattr(left, "right"):
-            compare_structure(left.left, right.left)
-            compare_structure(left.right, right.right)
-            return
-
-    compare_structure(id_ast, display_ast)
-
-    if len(id_literals) != len(display_literals):
-        raise SectionFailure("Formula literal count mismatch between H and I")
-
-    for id_lit, display_lit in zip(id_literals, display_literals):
-        if id_lit.op != display_lit.op:
-            raise SectionFailure("Formula literal operators mismatch between H and I")
-
-    id_to_display: dict[str, str] = {}
-    for id_lit, display_lit in zip(id_literals, display_literals):
-        if id_lit.id in id_to_display and id_to_display[id_lit.id] != display_lit.id:
-            raise SectionFailure(f"Inconsistent display name for ID {id_lit.id}")
-        id_to_display[id_lit.id] = display_lit.id
-
-    if len(set(id_to_display.values())) != len(id_to_display.values()):
-        raise SectionFailure("Duplicate display name for different IDs")
+    id_ast = parse_formula_with_literal_parser(formula_ids, id_literal_parser, op_config=op_config, log_extra=log_extra)
 
     dnf_clauses = to_dnf(id_ast)
-    dnf_with_display = [
-        [LiteralModel(id=lit.id, display_name=id_to_display[lit.id], op=lit.op) for lit in clause]
-        for clause in dnf_clauses
-    ]
-    normalized = normalize_dnf(dnf_with_display)
+    normalized = normalize_dnf(dnf_clauses)
 
     deduped_vars: dict[str, LiteralModel] = {}
     for lit in id_literals:
         if lit.id not in deduped_vars:
-            deduped_vars[lit.id] = LiteralModel(id=lit.id, display_name=id_to_display[lit.id], op=lit.op)
+            deduped_vars[lit.id] = lit
     return normalized, list(deduped_vars.values())
 
 
@@ -156,6 +122,13 @@ def process_excel(
 
     logger.info("START processing", extra=_extra(Stage.RUN, None))
     logger.info("Input=%s Output=%s max_rules=%s", input_path, output_root, max_rules, extra=_extra(Stage.RUN, None))
+
+    op_config = _run_stage(
+        Stage.LOAD_OPERATOR_CONFIG,
+        None,
+        lambda: load_operator_config(log_extra=_extra(Stage.LOAD_OPERATOR_CONFIG, None)),
+        expected_exceptions=(OperatorConfigError,),
+    )
 
     workbook = _run_stage(
         Stage.LOAD_WORKBOOK,
@@ -196,7 +169,6 @@ def process_excel(
             str(activity) if activity is not None else None,
             str(dnsh_goal) if dnsh_goal is not None else None,
             str(formula_ids) if formula_ids is not None else None,
-            str(formula_display) if formula_display is not None else None,
         )
         section_key = SectionKey(
             env_objective=str(env_objective) if env_objective is not None else None,
@@ -227,8 +199,12 @@ def process_excel(
             dnf_clauses, variables = _run_stage(
                 Stage.SECTION_PARSE,
                 section_ref,
-                lambda: parse_formula_pair(str(formula_ids), str(formula_display)),
-                expected_exceptions=(SectionFailure, FormulaParseError),
+                lambda: parse_formula_ids(
+                    str(formula_ids),
+                    op_config,
+                    log_extra=_extra(Stage.SECTION_PARSE, section_ref),
+                ),
+                expected_exceptions=(SectionFailure, FormulaParseError, OperatorConfigError),
             )
 
             def _check_rule_limit() -> None:
@@ -297,7 +273,6 @@ def process_excel(
                 section.key.activity,
                 section.key.dnsh_goal,
                 section.key.formula_ids,
-                section.formula_display,
             )
 
             try:

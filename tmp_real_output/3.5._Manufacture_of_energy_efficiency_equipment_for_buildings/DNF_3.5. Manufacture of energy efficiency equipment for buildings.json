@@ -1,0 +1,465 @@
+{
+  "activity": "3.5. Manufacture of energy efficiency equipment for buildings",
+  "generatedAt": "2026-02-04T16:21:06.433660+00:00",
+  "sections": [
+    {
+      "key": {
+        "A": "Climate Change Mitigation",
+        "B": "3.5",
+        "C": "3.5. Manufacture of energy efficiency equipment for buildings",
+        "F": "Substantial Contribution",
+        "G": "Type A",
+        "H": "((ePBN111002_1|ePBN111003_1|ePBN115700_1|ePBN115701_1|ePBN115699_1|ePBN115691_1|ePBN115692_1|ePBN115693_1|ePBN115694_1|ePBN115695_1|ePBN115696_1|ePBN115697_1|ePBN115698_1|ePBN115690_1|ePBN115688_1|ePBN115689_1|ePBN115687_1))&(ePBN993847_1<>1)&ePBN110911_1"
+      },
+      "sheetName": "CCM_3.5",
+      "formulaIds": "((ePBN111002_1|ePBN111003_1|ePBN115700_1|ePBN115701_1|ePBN115699_1|ePBN115691_1|ePBN115692_1|ePBN115693_1|ePBN115694_1|ePBN115695_1|ePBN115696_1|ePBN115697_1|ePBN115698_1|ePBN115690_1|ePBN115688_1|ePBN115689_1|ePBN115687_1))&(ePBN993847_1<>1)&ePBN110911_1",
+      "formulaDisplay": "((m) energy-efficient building automation and control systems for residential and non-residential buildings|n) zoned thermostats and devices for the smart monitoring of the main electricity loads or heat loads for buildings, and sensoring equipment|p) district heating exchangers and substations compliant with the district heating/cooling distribution activity set out in Section 4.15 of this Annex;|q) products for smart monitoring and regulating of heating system, and sensoring equipment.|o) products for heat metering and thermostatic controls for individual homes connected to district heating systems, for individual flats connected to central heating systems serving a whole building, and for central heating systems;|e) insulating products with a lambda value lower or equal to 0,06 W/mK|f) household appliances falling into the highest two populated classes of energy efficiency in accordance with Regulation (EU) 2017/1369 of the European Parliament and of the Council (95) and delegated acts adopted under that Regulation;|g) light sources rated in the highest two populated classes of energy efficiency in accordance with Regulation (EU) 2017/1369 and delegated acts adopted under that Regulation;|h) space heating and domestic hot water systems rated in the highest two populated classes of energy efficiency in accordance with Regulation (EU) 2017/1369 and delegated acts adopted under that Regulation;|i) cooling and ventilation systems rated in the highest two populated classes of energy efficiency in accordance with Regulation (EU) 2017/1369 and delegated acts adopted under that Regulation;|j) presence and daylight controls for lighting systems;|k) heat pumps compliant with the technical screening criteria set out in Section 4.16 of this Annex;|l) fa?ade and roofing elements with a solar shading or solar control function, including those that support the growing of vegetation;|d) roofing systems with U-value lower or equal to 0,3 W/m2K;|b) doors with U-value lower or equal to 1,2 W/m2K;|c) external wall systems with U-value lower or equal to 0,5 W/m2K;|a) windows with U-value lower or equal to 1,0 W/m2K;))&(CCM 3.5: No substantial contribution. The assessment is considered complete despite missing answers.<>1)&3.5. Manufacture of energy efficiency equipment for buildings",
+      "variables": [
+        {
+          "id": "ePBN110911_1",
+          "displayName": "ePBN110911_1"
+        },
+        {
+          "id": "ePBN111002_1",
+          "displayName": "ePBN111002_1"
+        },
+        {
+          "id": "ePBN111003_1",
+          "displayName": "ePBN111003_1"
+        },
+        {
+          "id": "ePBN115687_1",
+          "displayName": "ePBN115687_1"
+        },
+        {
+          "id": "ePBN115688_1",
+          "displayName": "ePBN115688_1"
+        },
+        {
+          "id": "ePBN115689_1",
+          "displayName": "ePBN115689_1"
+        },
+        {
+          "id": "ePBN115690_1",
+          "displayName": "ePBN115690_1"
+        },
+        {
+          "id": "ePBN115691_1",
+          "displayName": "ePBN115691_1"
+        },
+        {
+          "id": "ePBN115692_1",
+          "displayName": "ePBN115692_1"
+        },
+        {
+          "id": "ePBN115693_1",
+          "displayName": "ePBN115693_1"
+        },
+        {
+          "id": "ePBN115694_1",
+          "displayName": "ePBN115694_1"
+        },
+        {
+          "id": "ePBN115695_1",
+          "displayName": "ePBN115695_1"
+        },
+        {
+          "id": "ePBN115696_1",
+          "displayName": "ePBN115696_1"
+        },
+        {
+          "id": "ePBN115697_1",
+          "displayName": "ePBN115697_1"
+        },
+        {
+          "id": "ePBN115698_1",
+          "displayName": "ePBN115698_1"
+        },
+        {
+          "id": "ePBN115699_1",
+          "displayName": "ePBN115699_1"
+        },
+        {
+          "id": "ePBN115700_1",
+          "displayName": "ePBN115700_1"
+        },
+        {
+          "id": "ePBN115701_1",
+          "displayName": "ePBN115701_1"
+        },
+        {
+          "id": "ePBN993847_1",
+          "displayName": "ePBN993847_1"
+        }
+      ],
+      "dnf": [
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN111002_1",
+            "displayName": "ePBN111002_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN111003_1",
+            "displayName": "ePBN111003_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN115687_1",
+            "displayName": "ePBN115687_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN115688_1",
+            "displayName": "ePBN115688_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN115689_1",
+            "displayName": "ePBN115689_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN115690_1",
+            "displayName": "ePBN115690_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN115691_1",
+            "displayName": "ePBN115691_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN115692_1",
+            "displayName": "ePBN115692_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN115693_1",
+            "displayName": "ePBN115693_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN115694_1",
+            "displayName": "ePBN115694_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN115695_1",
+            "displayName": "ePBN115695_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN115696_1",
+            "displayName": "ePBN115696_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN115697_1",
+            "displayName": "ePBN115697_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN115698_1",
+            "displayName": "ePBN115698_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN115699_1",
+            "displayName": "ePBN115699_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN115700_1",
+            "displayName": "ePBN115700_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ],
+        [
+          {
+            "id": "ePBN110911_1",
+            "displayName": "ePBN110911_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN115701_1",
+            "displayName": "ePBN115701_1",
+            "op": "EQ1"
+          },
+          {
+            "id": "ePBN993847_1",
+            "displayName": "ePBN993847_1",
+            "op": "NEQ1"
+          }
+        ]
+      ],
+      "rules": [
+        {
+          "name": "Alignment Rule 1",
+          "clauseIndex": 0
+        },
+        {
+          "name": "Alignment Rule 2",
+          "clauseIndex": 1
+        },
+        {
+          "name": "Alignment Rule 3",
+          "clauseIndex": 2
+        },
+        {
+          "name": "Alignment Rule 4",
+          "clauseIndex": 3
+        },
+        {
+          "name": "Alignment Rule 5",
+          "clauseIndex": 4
+        },
+        {
+          "name": "Alignment Rule 6",
+          "clauseIndex": 5
+        },
+        {
+          "name": "Alignment Rule 7",
+          "clauseIndex": 6
+        },
+        {
+          "name": "Alignment Rule 8",
+          "clauseIndex": 7
+        },
+        {
+          "name": "Alignment Rule 9",
+          "clauseIndex": 8
+        },
+        {
+          "name": "Alignment Rule 10",
+          "clauseIndex": 9
+        },
+        {
+          "name": "Alignment Rule 11",
+          "clauseIndex": 10
+        },
+        {
+          "name": "Alignment Rule 12",
+          "clauseIndex": 11
+        },
+        {
+          "name": "Alignment Rule 13",
+          "clauseIndex": 12
+        },
+        {
+          "name": "Alignment Rule 14",
+          "clauseIndex": 13
+        },
+        {
+          "name": "Alignment Rule 15",
+          "clauseIndex": 14
+        },
+        {
+          "name": "Alignment Rule 16",
+          "clauseIndex": 15
+        },
+        {
+          "name": "Alignment Rule 17",
+          "clauseIndex": 16
+        }
+      ],
+      "status": "OK",
+      "error": null
+    }
+  ],
+  "summary": {
+    "sectionsTotal": 1,
+    "sectionsSucceeded": 1,
+    "sectionsFailed": 0
+  }
+}
