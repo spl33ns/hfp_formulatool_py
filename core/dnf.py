@@ -1,3 +1,19 @@
+"""DNF conversion utilities for formula ASTs.
+
+Representation:
+- A DNF is a list of clauses, where each clause is a list of LiteralModel.
+- Each clause is a conjunction (AND) of literals.
+- The outer list is a disjunction (OR) of those clauses.
+
+Notes:
+- Negation is only supported for EQ1/NEQ1 literals; EQ0 negation raises FormulaParseError.
+- Normalization removes contradictions and duplicate clauses, and sorts deterministically.
+
+Example:
+    (A OR B) AND (C OR D)
+    -> [[A, C], [A, D], [B, C], [B, D]]
+"""
+
 from __future__ import annotations
 
 from core.formula_parser import AndNode, AstNode, LiteralNode, NotNode, OrNode, FormulaParseError
