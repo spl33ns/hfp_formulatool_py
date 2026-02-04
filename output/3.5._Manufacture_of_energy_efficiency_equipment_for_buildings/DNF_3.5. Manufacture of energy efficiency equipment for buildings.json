@@ -1,6 +1,6 @@
 {
   "activity": "3.5. Manufacture of energy efficiency equipment for buildings",
-  "generatedAt": "2026-02-04T10:42:33.415771+00:00",
+  "generatedAt": "2026-02-04T14:13:26.250450+00:00",
   "sections": [
     {
       "key": {
@@ -19,119 +19,11 @@
       "rules": [],
       "status": "FAILED",
       "error": "Unexpected token &"
-    },
-    {
-      "key": {
-        "A": "Climate Change Mitigation",
-        "B": "3.5",
-        "C": "3.5. Manufacture of energy efficiency equipment for buildings",
-        "F": "Climate Change Adaptation",
-        "G": "Product | Project",
-        "H": "(((((ePBN114211_1=0)&ePBN115002_1&ePBN114210_1)|(((ePBN113603_1=0)|(ePBN113603_1&ePBN113601_1&(ePBN113602_1=0))|(ePBN113603_1&ePBN113601_1&ePBN113602_1&ePBN111305_1&(ePBN113604_1=0))|(ePBN113603_1&ePBN113601_1&ePBN113602_1&ePBN111305_1&ePBN113604_1&ePBN113605_1))&ePBN111303_1)&ePBN114211_1)&(ePBN990109_1=0))|ePBN990109_1)&ePBN110911_1"
-      },
-      "sheetName": null,
-      "formulaIds": "(((((ePBN114211_1=0)&ePBN115002_1&ePBN114210_1)|(((ePBN113603_1=0)|(ePBN113603_1&ePBN113601_1&(ePBN113602_1=0))|(ePBN113603_1&ePBN113601_1&ePBN113602_1&ePBN111305_1&(ePBN113604_1=0))|(ePBN113603_1&ePBN113601_1&ePBN113602_1&ePBN111305_1&ePBN113604_1&ePBN113605_1))&ePBN111303_1)&ePBN114211_1)&(ePBN990109_1=0))|ePBN990109_1)&ePBN110911_1",
-      "formulaDisplay": "(((((Is the portfolio item a Project?=0)&A 2.1 Have climate risks been reviewed against implemented standards on environmental conditions?&A 3.1 Does the PLM process include the application of the respective standards on environmental conditions?)|(((A 2.3 Has a relevant risk been identified?=0)|(A 2.3 Has a relevant risk been identified?&A 3.1 Has a detailed climate risk assessment been performed?&(A 3.3 Was a relevant risk identified for further assessment?=0))|(A 2.3 Has a relevant risk been identified?&A 3.1 Has a detailed climate risk assessment been performed?&A 3.3 Was a relevant risk identified for further assessment?&A 4.1 Has a CRVA been performed?&(A 4.3 Was a relevant risk identified to be covered by adaptation measures?=0))|(A 2.3 Has a relevant risk been identified?&A 3.1 Has a detailed climate risk assessment been performed?&A 3.3 Was a relevant risk identified for further assessment?&A 4.1 Has a CRVA been performed?&A 4.3 Was a relevant risk identified to be covered by adaptation measures?&A 5.1 In case the activity is new, have the adaptation measures been implemented at the time of completion? In case of an existing activity, has the adaptation plan (to be implemented within 5 years) been signed off?))&A 2.1 Was a Climate Risk Screening performed?)&Is the portfolio item a Project?)&(A 1.1 Is this process not applicable regarding Climate change adaptation for activity CCM 3.5?=0))|A 1.1 Is this process not applicable regarding Climate change adaptation for activity CCM 3.5?)&3.5. Manufacture of energy efficiency equipment for buildings",
-      "variables": [],
-      "dnf": [],
-      "rules": [],
-      "status": "FAILED",
-      "error": "Expected RPAREN but got LITERAL"
-    },
-    {
-      "key": {
-        "A": "Climate Change Mitigation",
-        "B": "3.5",
-        "C": "3.5. Manufacture of energy efficiency equipment for buildings",
-        "F": "Water",
-        "G": "Project",
-        "H": "((ePBN990111_1|((ePBN990111_1=0)&ePBN992712_1&(ePBN992711_1=0))|((ePBN990111_1=0)&ePBN992712_1&ePBN992711_1&ePBN992708_1&(ePBN992710_1=0))|((ePBN990111_1=0)&ePBN992712_1&ePBN992711_1&ePBN992708_1&ePBN992710_1&ePBN992709_1))&ePBN114211_1)&ePBN110911_1"
-      },
-      "sheetName": null,
-      "formulaIds": "((ePBN990111_1|((ePBN990111_1=0)&ePBN992712_1&(ePBN992711_1=0))|((ePBN990111_1=0)&ePBN992712_1&ePBN992711_1&ePBN992708_1&(ePBN992710_1=0))|((ePBN990111_1=0)&ePBN992712_1&ePBN992711_1&ePBN992708_1&ePBN992710_1&ePBN992709_1))&ePBN114211_1)&ePBN110911_1",
-      "formulaDisplay": "((B 1.1 Is this process not applicable regarding Sustainable use and Protection of water and marine resources for activity CCM 3.5?|((B 1.1 Is this process not applicable regarding Sustainable use and Protection of water and marine resources for activity CCM 3.5?=0)&B 2.1 Was a water risk screening performed (conducted by Siemens, customer or authority)?&(B 2.3 Has a relevant risk been identified (Water)?=0))|((B 1.1 Is this process not applicable regarding Sustainable use and Protection of water and marine resources for activity CCM 3.5?=0)&B 2.1 Was a water risk screening performed (conducted by Siemens, customer or authority)?&B 2.3 Has a relevant risk been identified (Water)?&B 3.1 Has a detailed Water risk assessment been performed (conducted by Siemens, customer or authority)?&(B 3.3 Was a relevant risk identified to be covered by mitigation measures (Water)?=0))|((B 1.1 Is this process not applicable regarding Sustainable use and Protection of water and marine resources for activity CCM 3.5?=0)&B 2.1 Was a water risk screening performed (conducted by Siemens, customer or authority)?&B 2.3 Has a relevant risk been identified (Water)?&B 3.1 Has a detailed Water risk assessment been performed (conducted by Siemens, customer or authority)?&B 3.3 Was a relevant risk identified to be covered by mitigation measures (Water)?&B 4.1 Have the mitigation measures been implemented regarding the risks identified (Water)?))&Is the portfolio item a Project?)&3.5. Manufacture of energy efficiency equipment for buildings",
-      "variables": [],
-      "dnf": [],
-      "rules": [],
-      "status": "FAILED",
-      "error": "Expected RPAREN but got LPAREN"
-    },
-    {
-      "key": {
-        "A": "Climate Change Mitigation",
-        "B": "3.5",
-        "C": "3.5. Manufacture of energy efficiency equipment for buildings",
-        "F": "Circular Economy",
-        "G": "Product",
-        "H": "((ePBN990113_1|((ePBN990113_1=0)&ePBN114316_1&ePBN114317_1&ePBN115001_1))&(ePBN114211_1=0))&ePBN110911_1"
-      },
-      "sheetName": null,
-      "formulaIds": "((ePBN990113_1|((ePBN990113_1=0)&ePBN114316_1&ePBN114317_1&ePBN115001_1))&(ePBN114211_1=0))&ePBN110911_1",
-      "formulaDisplay": "((Is this process not applicable regarding Transition to a circular economy for activity CCM 3.5?|((Is this process not applicable regarding Transition to a circular economy for activity CCM 3.5?=0)&Are reused materials/components and materials with recycled content used in the product?&Was the product designed for high durability, recyclability, easy disassembly and adaptability?&Is information on and traceability of substances of concern throughout the life cycle of the manufactured products available?))&(Is the portfolio item a Project?=0))&3.5. Manufacture of energy efficiency equipment for buildings",
-      "variables": [],
-      "dnf": [],
-      "rules": [],
-      "status": "FAILED",
-      "error": "Expected RPAREN but got LPAREN"
-    },
-    {
-      "key": {
-        "A": "Climate Change Mitigation",
-        "B": "3.5",
-        "C": "3.5. Manufacture of energy efficiency equipment for buildings",
-        "F": "PollutionPrevention and Control",
-        "G": "Product & Project",
-        "H": "(ePBN990115_1|((ePBN990115_1=0)&ePBN113903_1&(ePBN113904_1=0))|((ePBN990115_1=0)&ePBN113904_1&ePBN113903_1&ePBN113905_1&(ePBN114205_1=0)&ePBN114206_1)|((ePBN990115_1=0)&ePBN113903_1&ePBN113904_1&ePBN113905_1&ePBN114205_1&ePBN113902_1&ePBN114206_1)|((ePBN990115_1=0)&ePBN113903_1&ePBN113904_1&(ePBN113905_1=0)&ePBN113902_1&ePBN114206_1))&ePBN110911_1"
-      },
-      "sheetName": null,
-      "formulaIds": "(ePBN990115_1|((ePBN990115_1=0)&ePBN113903_1&(ePBN113904_1=0))|((ePBN990115_1=0)&ePBN113904_1&ePBN113903_1&ePBN113905_1&(ePBN114205_1=0)&ePBN114206_1)|((ePBN990115_1=0)&ePBN113903_1&ePBN113904_1&ePBN113905_1&ePBN114205_1&ePBN113902_1&ePBN114206_1)|((ePBN990115_1=0)&ePBN113903_1&ePBN113904_1&(ePBN113905_1=0)&ePBN113902_1&ePBN114206_1))&ePBN110911_1",
-      "formulaDisplay": "(C 1.1 Is this process not applicable regarding Pollution prevention and control for activity CCM 3.5?|((C 1.1 Is this process not applicable regarding Pollution prevention and control for activity CCM 3.5?=0)&C 2.1 Are SoC checked?&(C 2.3 Are SoC used?=0))|((C 1.1 Is this process not applicable regarding Pollution prevention and control for activity CCM 3.5?=0)&C 2.3 Are SoC used?&C 2.1 Are SoC checked?&C 3.1 Was a substitution started / Is phase-out of SoC(s) planned?&(C 3.3 Is the substitution / phase out plan only covering parts of the contained SoC(s)?=0)&C 3.7 Is safe use ensured?)|((C 1.1 Is this process not applicable regarding Pollution prevention and control for activity CCM 3.5?=0)&C 2.1 Are SoC checked?&C 2.3 Are SoC used?&C 3.1 Was a substitution started / Is phase-out of SoC(s) planned?&C 3.3 Is the substitution / phase out plan only covering parts of the contained SoC(s)?&C 3.5 Is the justification for remaining substances w/o phase out (plan) complete and documented? (for remaining substances without other suitable alternative substances or technologies)&C 3.7 Is safe use ensured?)|((C 1.1 Is this process not applicable regarding Pollution prevention and control for activity CCM 3.5?=0)&C 2.1 Are SoC checked?&C 2.3 Are SoC used?&(C 3.1 Was a substitution started / Is phase-out of SoC(s) planned?=0)&C 3.5 Is the justification for remaining substances w/o phase out (plan) complete and documented? (for remaining substances without other suitable alternative substances or technologies)&C 3.7 Is safe use ensured?))&3.5. Manufacture of energy efficiency equipment for buildings",
-      "variables": [],
-      "dnf": [],
-      "rules": [],
-      "status": "FAILED",
-      "error": "Expected RPAREN but got LPAREN"
-    },
-    {
-      "key": {
-        "A": "Climate Change Mitigation",
-        "B": "3.5",
-        "C": "3.5. Manufacture of energy efficiency equipment for buildings",
-        "F": "Biodiversity",
-        "G": "Project",
-        "H": "((ePBN990117_1|((ePBN990117_1=0)&ePBN992713_1&(ePBN992714_1=0))|((ePBN990117_1=0)&ePBN992713_1&ePBN992714_1&ePBN992715_1&(ePBN992717_1=0))|((ePBN990117_1=0)&ePBN992713_1&ePBN992714_1&ePBN992717_1&ePBN992715_1&ePBN992716_1&(ePBN992701_1=0)))&ePBN114211_1)&ePBN110911_1"
-      },
-      "sheetName": null,
-      "formulaIds": "((ePBN990117_1|((ePBN990117_1=0)&ePBN992713_1&(ePBN992714_1=0))|((ePBN990117_1=0)&ePBN992713_1&ePBN992714_1&ePBN992715_1&(ePBN992717_1=0))|((ePBN990117_1=0)&ePBN992713_1&ePBN992714_1&ePBN992717_1&ePBN992715_1&ePBN992716_1&(ePBN992701_1=0)))&ePBN114211_1)&ePBN110911_1",
-      "formulaDisplay": "((D 1.1 Is this process not applicable regarding Protection and restoration of biodiversity and ecosystems for activity CCM 3.5?|((D 1.1 Is this process not applicable regarding Protection and restoration of biodiversity and ecosystems for activity CCM 3.5?=0)&D 2.1 Was a biodiversity risks screening performed (conducted by Siemens, customer or authority)?&(D 2.3 Has a protected area been identified or have risks been identified?=0))|((D 1.1 Is this process not applicable regarding Protection and restoration of biodiversity and ecosystems for activity CCM 3.5?=0)&D 2.1 Was a biodiversity risks screening performed (conducted by Siemens, customer or authority)?&D 2.3 Has a protected area been identified or have risks been identified?&D 3.1 Has a detailed assessment been performed (conducted by Siemens, customer or authority)?&(D 3.3 Was a relevant risk to be covered by mitigation measures?=0))|((D 1.1 Is this process not applicable regarding Protection and restoration of biodiversity and ecosystems for activity CCM 3.5?=0)&D 2.1 Was a biodiversity risks screening performed (conducted by Siemens, customer or authority)?&D 2.3 Has a protected area been identified or have risks been identified?&D 3.3 Was a relevant risk to be covered by mitigation measures?&D 3.1 Has a detailed assessment been performed (conducted by Siemens, customer or authority)?&D 4.1 Have the mitigation measures been implemented regarding the risks identified?&(D 4.3 Does the activity require compensation measures for Natura 2000 sites?=0)))&Is the portfolio item a Project?)&3.5. Manufacture of energy efficiency equipment for buildings",
-      "variables": [],
-      "dnf": [],
-      "rules": [],
-      "status": "FAILED",
-      "error": "Expected RPAREN but got LPAREN"
-    },
-    {
-      "key": {
-        "A": "Climate Change Mitigation",
-        "B": "3.5",
-        "C": "3.5. Manufacture of energy efficiency equipment for buildings",
-        "F": "Portfolio",
-        "G": "Product | Project",
-        "H": "ePBN990097_1&ePBN990103_1&((ePBN114211_1&ePBN990099_1&ePBN990105_1)|((ePBN114211_1=0)&ePBN990101_1))"
-      },
-      "sheetName": null,
-      "formulaIds": "ePBN990097_1&ePBN990103_1&((ePBN114211_1&ePBN990099_1&ePBN990105_1)|((ePBN114211_1=0)&ePBN990101_1))",
-      "formulaDisplay": "DNSH Obj.1 Act.3.5 Climate change adaptation&DNSH Obj.1 Act.3.5 Pollution prevention and control&((Is the portfolio item a Project?&DNSH Obj.1 Act.3.5 Sustainable use and Protection of water and marine resources&DNSH Obj.1 Act.3.5 Protection and restoration of biodiversity and ecosystems)|((Is the portfolio item a Project?=0)&DNSH Obj.1 Act.3.5 Transition to a circular economy))",
-      "variables": [],
-      "dnf": [],
-      "rules": [],
-      "status": "FAILED",
-      "error": "Unexpected token ("
     }
   ],
   "summary": {
-    "sectionsTotal": 7,
+    "sectionsTotal": 1,
     "sectionsSucceeded": 0,
-    "sectionsFailed": 7
+    "sectionsFailed": 1
   }
 }

@@ -92,7 +92,6 @@ def parse_formula_pair(formula_ids: str, formula_display: str) -> tuple[list[lis
 def process_excel(
     input_path: Path,
     output_root: Path,
-    template_path: Path | None,
     max_rules: int,
 ) -> dict[str, list[SectionResult]]:
     from openpyxl import Workbook, load_workbook

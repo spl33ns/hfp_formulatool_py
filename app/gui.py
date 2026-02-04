@@ -20,17 +20,16 @@ class PipelineWorker(QtCore.QThread):
     progress = QtCore.Signal(str)
     finished = QtCore.Signal(dict)
 
-    def __init__(self, input_path: Path, output_root: Path, template_path: Path | None, max_rules: int):
+    def __init__(self, input_path: Path, output_root: Path, max_rules: int):
         super().__init__()
         self.input_path = input_path
         self.output_root = output_root
-        self.template_path = template_path
         self.max_rules = max_rules
 
     def run(self) -> None:
         try:
             self.progress.emit("Starting processing...")
-            results = process_excel(self.input_path, self.output_root, self.template_path, self.max_rules)
+            results = process_excel(self.input_path, self.output_root, None, self.max_rules)
             self.progress.emit("Processing completed")
             self.finished.emit(results)
         except Exception as exc:  # pragma: no cover - UI error feedback
@@ -46,7 +45,6 @@ class MainWindow(QtWidgets.QWidget):
 
         self.input_path_edit = QtWidgets.QLineEdit()
         self.output_path_edit = QtWidgets.QLineEdit()
-        self.template_path_edit = QtWidgets.QLineEdit()
         self.max_rules_edit = QtWidgets.QSpinBox()
         self.max_rules_edit.setRange(1, 100000)
         self.max_rules_edit.setValue(2000)
@@ -72,7 +70,6 @@ class MainWindow(QtWidgets.QWidget):
 
         layout.addLayout(self._build_row("Input Excel", self.input_path_edit, self.browse_input))
         layout.addLayout(self._build_row("Output Folder", self.output_path_edit, self.browse_output))
-        layout.addLayout(self._build_row("Template Workbook", self.template_path_edit, self.browse_template))
 
         max_row = QtWidgets.QHBoxLayout()
         max_row.addWidget(QtWidgets.QLabel("MAX_RULES_PER_SECTION"))
@@ -95,11 +92,8 @@ class MainWindow(QtWidgets.QWidget):
     def _set_defaults(self) -> None:
         fixtures = Path(__file__).resolve().parents[1] / "fixtures"
         default_input = fixtures / "Formel_extrakt.xlsx"
-        default_template = fixtures / "CCM_3.5.xlsx"
         if default_input.exists():
             self.input_path_edit.setText(str(default_input))
-        if default_template.exists():
-            self.template_path_edit.setText(str(default_template))
         self.output_path_edit.setText(str(Path.cwd() / "output"))
 
     def browse_input(self) -> None:
@@ -112,15 +106,9 @@ class MainWindow(QtWidgets.QWidget):
         if path:
             self.output_path_edit.setText(path)
 
-    def browse_template(self) -> None:
-        path, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Select Template Excel", "", "Excel Files (*.xlsx)")
-        if path:
-            self.template_path_edit.setText(path)
-
     def run_pipeline(self) -> None:
         input_path = Path(self.input_path_edit.text()).expanduser()
         output_root = Path(self.output_path_edit.text()).expanduser()
-        template_path = Path(self.template_path_edit.text()).expanduser() if self.template_path_edit.text() else None
         max_rules = int(self.max_rules_edit.value())
 
         self.output_root = output_root
@@ -128,7 +116,7 @@ class MainWindow(QtWidgets.QWidget):
         self.run_button.setEnabled(False)
         self.open_output_button.setEnabled(False)
 
-        self.worker = PipelineWorker(input_path, output_root, template_path, max_rules)
+        self.worker = PipelineWorker(input_path, output_root, max_rules)
         self.worker.progress.connect(self.log_view.append)
         self.worker.finished.connect(self.on_finished)
         self.worker.start()
@@ -159,7 +147,6 @@ def run_app() -> None:
 
         input_var = tk.StringVar()
         output_var = tk.StringVar(value=str(Path.cwd() / "output"))
-        template_var = tk.StringVar()
         max_rules_var = tk.IntVar(value=2000)
         log_text = tk.Text(root, height=20, width=80)
 
@@ -173,18 +160,13 @@ def run_app() -> None:
             if path:
                 output_var.set(path)
 
-        def browse_template():
-            path = filedialog.askopenfilename(filetypes=[("Excel Files", "*.xlsx")])
-            if path:
-                template_var.set(path)
-
         def run_pipeline():
             def task():
                 try:
                     results = process_excel(
                         Path(input_var.get()),
                         Path(output_var.get()),
-                        Path(template_var.get()) if template_var.get() else None,
+                        None,
                         int(max_rules_var.get()),
                     )
                     total = sum(len(sections) for sections in results.values())
@@ -204,15 +186,11 @@ def run_app() -> None:
         tk.Entry(root, textvariable=output_var, width=60).grid(row=1, column=1)
         tk.Button(root, text="Browse", command=browse_output).grid(row=1, column=2)
 
-        tk.Label(root, text="Template Workbook").grid(row=2, column=0, sticky="w")
-        tk.Entry(root, textvariable=template_var, width=60).grid(row=2, column=1)
-        tk.Button(root, text="Browse", command=browse_template).grid(row=2, column=2)
+        tk.Label(root, text="MAX_RULES_PER_SECTION").grid(row=2, column=0, sticky="w")
+        tk.Entry(root, textvariable=max_rules_var, width=10).grid(row=2, column=1, sticky="w")
 
-        tk.Label(root, text="MAX_RULES_PER_SECTION").grid(row=3, column=0, sticky="w")
-        tk.Entry(root, textvariable=max_rules_var, width=10).grid(row=3, column=1, sticky="w")
-
-        tk.Button(root, text="Run", command=run_pipeline).grid(row=4, column=0, columnspan=3, pady=5)
-        log_text.grid(row=5, column=0, columnspan=3)
+        tk.Button(root, text="Run", command=run_pipeline).grid(row=3, column=0, columnspan=3, pady=5)
+        log_text.grid(row=4, column=0, columnspan=3)
 
         root.mainloop()
         return
