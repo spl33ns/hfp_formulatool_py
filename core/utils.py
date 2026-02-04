@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import datetime
+from pathlib import Path
 import re
 
 
@@ -48,6 +50,33 @@ def ensure_unique_sheet_name(name: str, used: set[str]) -> str:
 def sanitize_filename(name: str) -> str:
     cleaned = re.sub(r"[^A-Za-z0-9._-]+", "_", name.strip())
     return cleaned.strip("_") or "output"
+
+
+def create_run_output_dir(output_root: str) -> Path:
+    """Create a per-run output directory under the user-selected root folder.
+
+    Folder name format: "YYYY-MM-DD HH-mm-ss-fff" (Windows-safe; no ":")
+    If the folder already exists, suffixes "_1", "_2", ... are appended.
+    """
+    root = Path(output_root).expanduser()
+    root.mkdir(parents=True, exist_ok=True)
+
+    now = datetime.now()
+    ms = now.microsecond // 1000
+    base_name = f"{now.strftime('%Y-%m-%d %H-%M-%S')}-{ms:03d}"
+
+    candidate = root / base_name
+    if not candidate.exists():
+        candidate.mkdir()
+        return candidate.resolve()
+
+    suffix = 1
+    while True:
+        candidate = root / f"{base_name}_{suffix}"
+        if not candidate.exists():
+            candidate.mkdir()
+            return candidate.resolve()
+        suffix += 1
 
 
 def op_to_token(op: str) -> str:

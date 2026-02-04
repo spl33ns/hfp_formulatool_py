@@ -14,6 +14,7 @@ else:  # pragma: no cover - fallback path
 from core.pipeline import process_excel
 from core.logging_conf import setup_run_logging
 from core.stages import Stage
+from core.utils import create_run_output_dir
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +32,9 @@ class PipelineWorker(QtCore.QThread):
     def run(self) -> None:
         try:
             log_path = setup_run_logging(output_root=self.output_root, level=logging.INFO, gui_emit_line=self.progress.emit)
+            logger.info("Output directory: %s", self.output_root.resolve(), extra={"stage": Stage.RUN.value, "section": "-"})
             logger.info("Log file: %s", log_path, extra={"stage": Stage.RUN.value, "section": "-"})
+            logger.info("Starting processing...", extra={"stage": Stage.RUN.value, "section": "-"})
             results = process_excel(self.input_path, self.output_root, self.max_rules)
             logger.info("Processing completed", extra={"stage": Stage.RUN.value, "section": "-"})
             self.finished.emit(results)
@@ -114,12 +117,18 @@ class MainWindow(QtWidgets.QWidget):
         output_root = Path(self.output_path_edit.text()).expanduser()
         max_rules = int(self.max_rules_edit.value())
 
-        self.output_root = output_root
+        try:
+            run_output_dir = create_run_output_dir(str(output_root))
+        except Exception as exc:  # pragma: no cover - UI error feedback
+            self.log_view.append(f"Error: could not create output directory: {exc}")
+            return
+
+        self.output_root = run_output_dir
         self.log_view.clear()
         self.run_button.setEnabled(False)
         self.open_output_button.setEnabled(False)
 
-        self.worker = PipelineWorker(input_path, output_root, max_rules)
+        self.worker = PipelineWorker(input_path, run_output_dir, max_rules)
         self.worker.progress.connect(self.log_view.append)
         self.worker.finished.connect(self.on_finished)
         self.worker.start()
@@ -166,9 +175,11 @@ def run_app() -> None:
         def run_pipeline():
             def task():
                 try:
+                    run_output_dir = create_run_output_dir(output_var.get())
+                    setup_run_logging(output_root=run_output_dir, level=logging.INFO, gui_emit_line=None)
                     results = process_excel(
                         Path(input_var.get()),
-                        Path(output_var.get()),
+                        run_output_dir,
                         int(max_rules_var.get()),
                     )
                     total = sum(len(sections) for sections in results.values())

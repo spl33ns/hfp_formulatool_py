@@ -7,6 +7,7 @@ from pathlib import Path
 from core.logging_conf import setup_run_logging
 from core.pipeline import process_excel
 from core.stages import Stage
+from core.utils import create_run_output_dir
 
 logger = logging.getLogger(__name__)
 
@@ -25,14 +26,16 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     level = getattr(logging, args.log_level)
-    log_path = setup_run_logging(output_root=args.output, level=level, gui_emit_line=None)
+    run_output_dir = create_run_output_dir(str(args.output))
+    log_path = setup_run_logging(output_root=run_output_dir, level=level, gui_emit_line=None)
+    print(f"Output directory: {run_output_dir}")
     print(f"Log file: {log_path}")
 
     logger.info("CLI start", extra={"stage": Stage.RUN.value, "section": "-"})
     logger.info("Log file: %s", log_path, extra={"stage": Stage.RUN.value, "section": "-"})
 
     try:
-        results = process_excel(args.input, args.output, args.max_rules)
+        results = process_excel(args.input, run_output_dir, args.max_rules)
     except Exception:
         logger.exception("Pipeline failed", extra={"stage": Stage.RUN.value, "section": "-"})
         return 2
