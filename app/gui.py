@@ -6,9 +6,10 @@ import sys
 from pathlib import Path
 
 if importlib.util.find_spec("PySide6") is not None:  # pragma: no cover - optional dependency
-    from PySide6 import QtCore, QtWidgets
+    from PySide6 import QtCore, QtGui, QtWidgets
 else:  # pragma: no cover - fallback path
     QtCore = None
+    QtGui = None
     QtWidgets = None
 
 from core.pipeline import process_excel
@@ -171,7 +172,7 @@ class MainWindow(QtWidgets.QWidget):
     def open_output_folder(self) -> None:
         if not self.output_root:
             return
-        QtWidgets.QDesktopServices.openUrl(QtCore.QUrl.fromLocalFile(str(self.output_root)))
+        QtGui.QDesktopServices.openUrl(QtCore.QUrl.fromLocalFile(str(self.output_root)))
 
 
 def run_app() -> None:
