@@ -16,6 +16,12 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Headless runner for the Truth Table Generator pipeline.")
     parser.add_argument("--input", required=True, type=Path, help="Path to input Excel (.xlsx).")
     parser.add_argument("--output", default=Path("output"), type=Path, help="Output root folder.")
+    parser.add_argument(
+        "--mapping-file",
+        default=None,
+        type=Path,
+        help="Optional mapping file (.csv with TAB delimiter, UTF-8; columns 1/3/8).",
+    )
     parser.add_argument("--max-rules", default=2000, type=int, help="Max DNF rules per section.")
     parser.add_argument(
         "--log-level",
@@ -35,7 +41,7 @@ def main(argv: list[str] | None = None) -> int:
     logger.info("Log file: %s", log_path, extra={"stage": Stage.RUN.value, "section": "-"})
 
     try:
-        results = process_excel(args.input, run_output_dir, args.max_rules)
+        results = process_excel(args.input, run_output_dir, args.max_rules, mapping_path=args.mapping_file)
     except Exception:
         logger.exception("Pipeline failed", extra={"stage": Stage.RUN.value, "section": "-"})
         return 2

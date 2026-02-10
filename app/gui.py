@@ -23,11 +23,12 @@ class PipelineWorker(QtCore.QThread):
     progress = QtCore.Signal(str)
     finished = QtCore.Signal(dict)
 
-    def __init__(self, input_path: Path, output_root: Path, max_rules: int):
+    def __init__(self, input_path: Path, output_root: Path, max_rules: int, mapping_path: Path | None = None):
         super().__init__()
         self.input_path = input_path
         self.output_root = output_root
         self.max_rules = max_rules
+        self.mapping_path = mapping_path
 
     def run(self) -> None:
         try:
@@ -35,7 +36,12 @@ class PipelineWorker(QtCore.QThread):
             logger.info("Output directory: %s", self.output_root.resolve(), extra={"stage": Stage.RUN.value, "section": "-"})
             logger.info("Log file: %s", log_path, extra={"stage": Stage.RUN.value, "section": "-"})
             logger.info("Starting processing...", extra={"stage": Stage.RUN.value, "section": "-"})
-            results = process_excel(self.input_path, self.output_root, self.max_rules)
+            results = process_excel(
+                self.input_path,
+                self.output_root,
+                self.max_rules,
+                mapping_path=self.mapping_path,
+            )
             logger.info("Processing completed", extra={"stage": Stage.RUN.value, "section": "-"})
             self.finished.emit(results)
         except Exception as exc:  # pragma: no cover - UI error feedback
@@ -51,6 +57,7 @@ class MainWindow(QtWidgets.QWidget):
 
         self.input_path_edit = QtWidgets.QLineEdit()
         self.output_path_edit = QtWidgets.QLineEdit()
+        self.mapping_path_edit = QtWidgets.QLineEdit()
         self.max_rules_edit = QtWidgets.QSpinBox()
         self.max_rules_edit.setRange(1, 100000)
         self.max_rules_edit.setValue(2000)
@@ -76,6 +83,14 @@ class MainWindow(QtWidgets.QWidget):
 
         layout.addLayout(self._build_row("Input Excel", self.input_path_edit, self.browse_input))
         layout.addLayout(self._build_row("Output Folder", self.output_path_edit, self.browse_output))
+        layout.addLayout(self._build_row("Variable mapping file", self.mapping_path_edit, self.browse_mapping))
+
+        mapping_help = QtWidgets.QLabel(
+            "Required format: UTF-8 encoded .csv with TAB (\\t) delimiter. "
+            "Columns: 1=ID, 3=Technical name, 8=Question text."
+        )
+        mapping_help.setWordWrap(True)
+        layout.addWidget(mapping_help)
 
         max_row = QtWidgets.QHBoxLayout()
         max_row.addWidget(QtWidgets.QLabel("MAX_RULES_PER_SECTION"))
@@ -112,9 +127,21 @@ class MainWindow(QtWidgets.QWidget):
         if path:
             self.output_path_edit.setText(path)
 
+    def browse_mapping(self) -> None:
+        path, _ = QtWidgets.QFileDialog.getOpenFileName(
+            self,
+            "Select Variable Mapping File",
+            "",
+            "CSV Files (*.csv);;Text Files (*.tsv *.txt);;All Files (*)",
+        )
+        if path:
+            self.mapping_path_edit.setText(path)
+
     def run_pipeline(self) -> None:
         input_path = Path(self.input_path_edit.text()).expanduser()
         output_root = Path(self.output_path_edit.text()).expanduser()
+        mapping_path_text = self.mapping_path_edit.text().strip()
+        mapping_path = Path(mapping_path_text).expanduser() if mapping_path_text else None
         max_rules = int(self.max_rules_edit.value())
 
         try:
@@ -128,7 +155,7 @@ class MainWindow(QtWidgets.QWidget):
         self.run_button.setEnabled(False)
         self.open_output_button.setEnabled(False)
 
-        self.worker = PipelineWorker(input_path, run_output_dir, max_rules)
+        self.worker = PipelineWorker(input_path, run_output_dir, max_rules, mapping_path)
         self.worker.progress.connect(self.log_view.append)
         self.worker.finished.connect(self.on_finished)
         self.worker.start()
@@ -159,6 +186,7 @@ def run_app() -> None:
 
         input_var = tk.StringVar()
         output_var = tk.StringVar(value=str(Path.cwd() / "output"))
+        mapping_var = tk.StringVar()
         max_rules_var = tk.IntVar(value=2000)
         log_text = tk.Text(root, height=20, width=80)
 
@@ -172,15 +200,24 @@ def run_app() -> None:
             if path:
                 output_var.set(path)
 
+        def browse_mapping():
+            path = filedialog.askopenfilename(
+                filetypes=[("CSV Files", "*.csv"), ("Text Files", "*.tsv *.txt"), ("All Files", "*.*")]
+            )
+            if path:
+                mapping_var.set(path)
+
         def run_pipeline():
             def task():
                 try:
                     run_output_dir = create_run_output_dir(output_var.get())
                     setup_run_logging(output_root=run_output_dir, level=logging.INFO, gui_emit_line=None)
+                    mapping_path = Path(mapping_var.get()).expanduser() if mapping_var.get().strip() else None
                     results = process_excel(
                         Path(input_var.get()),
                         run_output_dir,
                         int(max_rules_var.get()),
+                        mapping_path=mapping_path,
                     )
                     total = sum(len(sections) for sections in results.values())
                     succeeded = sum(len([s for s in sections if s.status == "OK"]) for sections in results.values())
@@ -199,11 +236,23 @@ def run_app() -> None:
         tk.Entry(root, textvariable=output_var, width=60).grid(row=1, column=1)
         tk.Button(root, text="Browse", command=browse_output).grid(row=1, column=2)
 
-        tk.Label(root, text="MAX_RULES_PER_SECTION").grid(row=2, column=0, sticky="w")
-        tk.Entry(root, textvariable=max_rules_var, width=10).grid(row=2, column=1, sticky="w")
+        tk.Label(root, text="Variable mapping file").grid(row=2, column=0, sticky="w")
+        tk.Entry(root, textvariable=mapping_var, width=60).grid(row=2, column=1)
+        tk.Button(root, text="Browse", command=browse_mapping).grid(row=2, column=2)
 
-        tk.Button(root, text="Run", command=run_pipeline).grid(row=3, column=0, columnspan=3, pady=5)
-        log_text.grid(row=4, column=0, columnspan=3)
+        tk.Label(
+            root,
+            text="Required format: UTF-8 encoded .csv with TAB (\\t) delimiter. "
+            "Columns: 1=ID, 3=Technical name, 8=Question text.",
+            justify="left",
+            wraplength=700,
+        ).grid(row=3, column=0, columnspan=3, sticky="w")
+
+        tk.Label(root, text="MAX_RULES_PER_SECTION").grid(row=4, column=0, sticky="w")
+        tk.Entry(root, textvariable=max_rules_var, width=10).grid(row=4, column=1, sticky="w")
+
+        tk.Button(root, text="Run", command=run_pipeline).grid(row=5, column=0, columnspan=3, pady=5)
+        log_text.grid(row=6, column=0, columnspan=3)
 
         root.mainloop()
         return

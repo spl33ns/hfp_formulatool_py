@@ -10,7 +10,13 @@ from core.formula_parser import FormulaParseError, parse_formula_with_literal_pa
 from core.models import LiteralModel, SectionKey, SectionResult
 from core.operator_config import OperatorConfig, OperatorConfigError, load_operator_config
 from core.stages import Stage
-from core.utils import ABBREVIATIONS, ensure_unique_sheet_name, natural_key, sanitize_filename
+from core.utils import ABBREVIATIONS, ensure_unique_sheet_name, sanitize_filename
+from core.variable_mapping import (
+    VariableMappingError,
+    VariableMeta,
+    load_variable_mapping_tsv,
+    lookup_variable_meta,
+)
 from exporters.confluence import write_confluence_markdown
 from exporters.docs_exporter import write_docs_files
 from exporters.xlsx_exporter import write_section_sheet
@@ -113,10 +119,45 @@ def parse_formula_ids(
     return normalized, list(deduped_vars.values())
 
 
+def _output_variable_sort_key(literal: LiteralModel) -> tuple[int, str, str]:
+    question_text = literal.question_text.strip()
+    return (
+        1 if not question_text else 0,
+        question_text.casefold(),
+        literal.id.casefold(),
+    )
+
+
+def _enrich_variable_with_mapping(literal: LiteralModel, mapping: dict[str, VariableMeta]) -> tuple[LiteralModel, bool]:
+    meta = lookup_variable_meta(mapping, literal.id)
+    if meta is None:
+        return (
+            LiteralModel(
+                id=literal.id,
+                display_name=literal.display_name,
+                op=literal.op,
+                technical_name="",
+                question_text="",
+            ),
+            False,
+        )
+    return (
+        LiteralModel(
+            id=literal.id,
+            display_name=literal.display_name,
+            op=literal.op,
+            technical_name=meta.technical_name,
+            question_text=meta.question_text,
+        ),
+        True,
+    )
+
+
 def process_excel(
     input_path: Path,
     output_root: Path,
     max_rules: int,
+    mapping_path: Path | None = None,
 ) -> dict[str, list[SectionResult]]:
     from openpyxl import Workbook, load_workbook
 
@@ -129,6 +170,24 @@ def process_excel(
         lambda: load_operator_config(log_extra=_extra(Stage.LOAD_OPERATOR_CONFIG, None)),
         expected_exceptions=(OperatorConfigError,),
     )
+
+    variable_mapping: dict[str, VariableMeta] = {}
+    mapping_loaded = False
+    mapping_stage_extra = _extra(Stage.LOAD_VARIABLE_MAPPING, None)
+    if mapping_path is None:
+        logger.info("NO_MAPPING_CONFIGURED", extra=mapping_stage_extra)
+    else:
+        try:
+            variable_mapping = _run_stage(
+                Stage.LOAD_VARIABLE_MAPPING,
+                None,
+                lambda: load_variable_mapping_tsv(mapping_path, log_extra=mapping_stage_extra),
+                expected_exceptions=(VariableMappingError,),
+            )
+            mapping_loaded = True
+        except VariableMappingError:
+            # Config-load failure is already logged with stacktrace; continue with ID-only fallback.
+            pass
 
     workbook = _run_stage(
         Stage.LOAD_WORKBOOK,
@@ -157,6 +216,8 @@ def process_excel(
     logger.info("Grouped sections=%d", len(grouped), extra=_extra(Stage.GROUP_ROWS, None))
 
     activity_results: dict[str, list[SectionResult]] = defaultdict(list)
+    missing_mapping_ids: list[str] = []
+    missing_mapping_seen: set[str] = set()
 
     for key, rows in grouped.items():
         env_objective, activity, dnsh_goal, formula_ids = key
@@ -213,12 +274,20 @@ def process_excel(
 
             _run_stage(Stage.SECTION_MAX_RULES, section_ref, _check_rule_limit, expected_exceptions=(SectionFailure,))
 
+            enriched_variables: list[LiteralModel] = []
+            for variable in variables:
+                enriched, found = _enrich_variable_with_mapping(variable, variable_mapping if mapping_loaded else {})
+                enriched_variables.append(enriched)
+                if mapping_loaded and not found and variable.id not in missing_mapping_seen:
+                    missing_mapping_seen.add(variable.id)
+                    missing_mapping_ids.append(variable.id)
+
             result = SectionResult(
                 key=section_key,
                 sheet_name=sheet_name,
                 formula_ids=str(formula_ids),
                 formula_display=str(formula_display),
-                variables=sorted(variables, key=lambda lit: natural_key(lit.id)),
+                variables=sorted(enriched_variables, key=_output_variable_sort_key),
                 dnf=dnf_clauses,
                 status="OK",
                 error=None,
@@ -314,6 +383,14 @@ def process_excel(
             _run_stage(Stage.EXPORT_ACTIVITY_DOCS, activity_ref, lambda: write_docs_files(activity_folder, activity, sections))
         except Exception:
             pass
+
+    if mapping_loaded and missing_mapping_ids:
+        logger.warning(
+            "MISSING_MAPPING: missing=%d sample=%s",
+            len(missing_mapping_ids),
+            missing_mapping_ids[:20],
+            extra=_extra(Stage.RUN, None),
+        )
 
     logger.info("DONE processing", extra=_extra(Stage.RUN, None))
     return activity_results

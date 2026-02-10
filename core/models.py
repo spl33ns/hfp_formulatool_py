@@ -12,6 +12,8 @@ class LiteralModel:
     id: str
     display_name: str
     op: LiteralOp
+    technical_name: str = ""
+    question_text: str = ""
 
 
 @dataclass(frozen=True)

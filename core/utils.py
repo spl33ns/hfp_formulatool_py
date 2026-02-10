@@ -8,6 +8,7 @@ import re
 ABBREVIATIONS = {
     "Climate Change Mitigation": "CCM",
     "Climate Change Adaptation": "CCA",
+    "PollutionPrevention and Control": "PPC",
     "Water": "WTR",
     "Biodiversity": "BIO",
     "Circular Economy": "CE",
