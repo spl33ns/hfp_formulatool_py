@@ -41,9 +41,9 @@ def _write_input_workbook(path: Path, formula_ids: str) -> None:
 
 
 def _write_mapping_file(path: Path, rows: list[tuple[str, str, str]]) -> None:
-    lines = ["\t".join(["ID", "x", "Technical name", "x", "x", "x", "x", "Question text"])]
+    lines = ["\t".join(["ID", "x", "Technical name", "x", "x", "x", "x", "x", "Question text"])]
     for var_id, technical_name, question_text in rows:
-        lines.append("\t".join([var_id, "x", technical_name, "x", "x", "x", "x", question_text]))
+        lines.append("\t".join([var_id, "x", technical_name, "x", "x", "x", "x", "x", question_text]))
     path.write_text("\n".join(lines), encoding="utf-8")
 
 

@@ -10,13 +10,13 @@ def _row(values: list[str]) -> str:
 
 
 @pytest.mark.parametrize("with_header", [True, False])
-def test_load_variable_mapping_tsv_reads_columns_1_3_8(tmp_path, with_header):
+def test_load_variable_mapping_reads_question_text_from_col9(tmp_path, with_header):
     mapping_path = tmp_path / "mapping.csv"
     lines = []
     if with_header:
-        lines.append(_row(["ID", "x", "Technical name", "x", "x", "x", "x", "Question text"]))
-    lines.append(_row(["A1", "x", "Tech A", "x", "x", "x", "x", "Question A"]))
-    lines.append(_row(["B2", "x", "Tech B", "x", "x", "x", "x", "Question B"]))
+        lines.append(_row(["ID", "x", "Technical name", "x", "x", "x", "x", "x", "Question text"]))
+    lines.append(_row(["A1", "x", "Tech A", "x", "x", "x", "x", "x", '"  Question A  "']))
+    lines.append(_row(["B2", "x", "Tech B", "x", "x", "x", "x", "x", "Question B"]))
     mapping_path.write_text("\n".join(lines), encoding="utf-8")
 
     mapping = load_variable_mapping_tsv(mapping_path)

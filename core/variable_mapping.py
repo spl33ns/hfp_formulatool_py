@@ -71,7 +71,7 @@ def load_variable_mapping_tsv(
     Required format:
     - file extension can be .csv, but content must be TAB-delimited
     - encoding UTF-8
-    - columns (1-based): 1=ID, 3=Technical name, 8=Question text
+    - columns (1-based): 1=ID, 3=Technical name, 9=Question text
     """
     mapping_path = Path(path).expanduser().resolve()
 
@@ -89,10 +89,10 @@ def load_variable_mapping_tsv(
                 if not row:
                     continue
 
-                padded = row + [""] * max(0, 8 - len(row))
+                padded = row + [""] * max(0, 9 - len(row))
                 id_value = _normalize(padded[0])
                 technical_name = _normalize(padded[2])
-                question_text = _normalize(padded[7])
+                question_text = _normalize(padded[8])
 
                 if row_index == 1 and (
                     _is_header_row(id_value, technical_name, question_text)
